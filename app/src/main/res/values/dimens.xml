@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Registration screen -->
+    <dimen name="register_title_size">18dp</dimen>
+    <dimen name="register_message_size">14dp</dimen>
+    <dimen name="register_hint_size">14dp</dimen>
+    <dimen name="register_continue_size">16dp</dimen>
+
+    <!-- Common sizes -->
+    <dimen name="common_title_size">25sp</dimen>
+    <dimen name="common_content_size">16sp</dimen>
+    <dimen name="common_midium_size">14dp</dimen>
+    <dimen name="common_instruction_size">12dp</dimen>
+    <dimen name="common_max_size">24dp</dimen>
+    <dimen name="common_10_size">10dp</dimen>
+    <dimen name="common_30_size">30dp</dimen>
+    <dimen name="common_8_size">8dp</dimen>
+    <dimen name="common_20_size">20dp</dimen>
+    <dimen name="common_18_size">18sp</dimen>
+    <dimen name="common_16_size">16sp</dimen>
+    <dimen name="common_15_size">15dp</dimen>
+    <dimen name="common_22_size">22dp</dimen>
+    <dimen name="common_25_size">25dp</dimen>
+
+    <dimen name="btn_text_size">18dp</dimen>
+    <dimen name="common_text_size">16sp</dimen>
+    <dimen name="btn_small_text_size">16dp</dimen>
+
+    <!-- Navigation Drawer -->
+    <dimen name="navigation_drawer_title_text">18dp</dimen>
+    <dimen name="navigation_drawer_content_text">14dp</dimen>
+
+    <dimen name="viewpager_margin">-64dp</dimen>
+    <dimen name="common_small_text_size">14sp</dimen>
+
+    <dimen name="navigation_drawer_width">260dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">190dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

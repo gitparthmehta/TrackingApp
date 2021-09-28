@@ -2,7 +2,9 @@ package com.track.trackingapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,8 +89,13 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, res.getMsg().toString(), Toast.LENGTH_LONG).show();
 
                     if (res.getStatus() == 1) {
-                        loginModels=res.getLoginModels();
-                        PreferenceHelper.putString(Constants.user_id, loginModels.get(0).getUser_id());
+                        loginModels = res.getLoginModels();
+                        Log.d("email_str", String.valueOf(loginModels.get(0).getUser_id()));
+                        PreferenceHelper.putString(Constants.user_id, String.valueOf(loginModels.get(0).getUser_id()));
+
+                        Intent intent = new Intent(LoginActivity.this, OtpVerificationActivity.class);
+                        startActivity(intent);
+
                     } else {
 
                     }

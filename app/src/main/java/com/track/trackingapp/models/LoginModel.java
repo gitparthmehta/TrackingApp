@@ -8,7 +8,7 @@ public class LoginModel {
     String mobile;
     String dob;
     String otp_enable;
-    String user_id;
+    int user_id;
 
     public String getFirst_name() {
         return first_name;
@@ -58,11 +58,11 @@ public class LoginModel {
         this.otp_enable = otp_enable;
     }
 
-    public String getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
 }

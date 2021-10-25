@@ -5,6 +5,15 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <permission
+        android:name="com.service.himalaya.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
 
     <application
         android:name=".Application.TrackApplicaation"
@@ -15,15 +24,44 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackingApp">
         <activity
+            android:name=".Activities.ProductListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activities.CategoryListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activities.UserListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activities.UserProfileActivity"
+            android:exported="true">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity
+            android:name=".Activities.ResetPasswordActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TrackingApp2" />
+        <activity
+            android:name=".Activities.ForgotActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TrackingApp2" />
+        <activity
             android:name=".Activities.HomeActivity"
             android:exported="true" />
         <activity
             android:name=".Activities.OtpVerificationActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.TrackingApp2" />
         <activity
             android:name=".Activities.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.TrackingApp2"></activity>
+            android:theme="@style/Theme.TrackingApp2" />
         <activity
             android:name=".Activities.SplashScreen"
             android:exported="true"
@@ -34,6 +72,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCnFLyg0fmSsVcqZFEE_00KvVxPg7QT364" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <activity
             android:name=".Activities.MainActivity"
             android:exported="true" />

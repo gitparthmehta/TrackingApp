@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.track.trackingapp.GlobalClass.Constants;
+import com.track.trackingapp.GlobalClass.PreferenceHelper;
 import com.track.trackingapp.R;
 
 public class SplashScreen extends AppCompatActivity {
@@ -33,8 +35,14 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent intent1 = new Intent(SplashScreen.this, LoginActivity.class);
-                startActivity(intent1);
+                if (PreferenceHelper.getString(Constants.user_id,"").isEmpty()){
+                    Intent intent1 = new Intent(SplashScreen.this, LoginActivity.class);
+                    startActivity(intent1);
+                }else {
+                    Intent intent1 = new Intent(SplashScreen.this, HomeActivity.class);
+                    startActivity(intent1);
+                }
+
 
 
             }

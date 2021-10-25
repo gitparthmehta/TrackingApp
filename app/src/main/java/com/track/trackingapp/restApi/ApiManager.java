@@ -73,6 +73,33 @@ public class ApiManager {
         if (requestCode == AppConstant.OTP) {
             call = apiService.doOtp(params);
         }
+        if (requestCode == AppConstant.CHECKIN) {
+            call = apiService.doCheckIn(params);
+        }
+        if (requestCode == AppConstant.CHECKOUT) {
+            call = apiService.doCheckOut(params);
+        }
+        if (requestCode == AppConstant.FORGOTPASSWORD) {
+            call = apiService.doForgotpassword(params);
+        }
+        if (requestCode == AppConstant.CHANGEPASSWORD) {
+            call = apiService.doChangepassword(params);
+        }
+        if (requestCode == AppConstant.VIEEPROFILE) {
+            call = apiService.viewprofile(params);
+        }
+        if (requestCode == AppConstant.USERSTATUS) {
+            call = apiService.Getstatus(params);
+        }
+        if (requestCode == AppConstant.ALLEMPLOYEELIST) {
+            call = apiService.GetAllEmployeeList(params);
+        }
+        if (requestCode == AppConstant.CATEGORYLIST) {
+            call = apiService.GetCategoryList(params);
+        }
+        if (requestCode == AppConstant.PRODUCTLIST) {
+            call = apiService.GetProductList(params);
+        }
 
         call.enqueue(new Callback<BaseReponseBody>() {
             @Override

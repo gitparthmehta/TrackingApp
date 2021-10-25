@@ -4,11 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/drawable-v24/ic_date.xml" value="0.2" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/drawable/ic_phone.xml" value="0.2074074074074074" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/drawable/rect_bg.xml" value="0.2" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_category_list.xml" value="0.16621376811594202" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_forgot.xml" value="0.16893115942028986" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_home.xml" value="0.15489130434782608" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_main.xml" value="0.10494450050454086" />
-        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_otp_verification.xml" value="0.161231884057971" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_otp_verification.xml" value="0.264" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_product_list.xml" value="0.16621376811594202" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_reset_password.xml" value="0.16893115942028986" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.17708333333333334" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_user_profile.xml" value="0.43486590038314177" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/item_category_list.xml" value="0.264" />
       </map>
     </option>
   </component>

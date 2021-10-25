@@ -8,7 +8,7 @@
     <dimen name="register_continue_size">16dp</dimen>
 
     <!-- Common sizes -->
-    <dimen name="common_title_size">25sp</dimen>
+    <dimen name="common_title_size">20sp</dimen>
     <dimen name="common_content_size">16sp</dimen>
     <dimen name="common_midium_size">14dp</dimen>
     <dimen name="common_instruction_size">12dp</dimen>

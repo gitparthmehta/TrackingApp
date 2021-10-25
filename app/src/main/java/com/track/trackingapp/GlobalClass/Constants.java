@@ -34,6 +34,7 @@ public class Constants {
     public static final String end_date = "end_date";
     public static final String mobile_number = "mobile_number";
     public static final String token = "token";
+    public static final String category_id = "category_id";
     public static final String designation_id = "designation_id";
     public static final String is_verified = "is_verified";
     public static final String profileimage = "profileimage";

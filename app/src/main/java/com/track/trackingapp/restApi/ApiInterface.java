@@ -31,6 +31,50 @@ public interface ApiInterface {
     @Headers("Content-Type:application/x-www-form-urlencoded")
     Call<BaseReponseBody> doOtp(@FieldMap Map<String, String> params);
 
+    @POST("checkin.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> doCheckIn(@FieldMap Map<String, String> params);
+
+    @POST("checkout.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> doCheckOut(@FieldMap Map<String, String> params);
+
+    @POST("forgotpassword.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> doForgotpassword(@FieldMap Map<String, String> params);
+
+    @POST("changepassword.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> doChangepassword(@FieldMap Map<String, String> params);
+
+    @POST("profile.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> viewprofile(@FieldMap Map<String, String> params);
+
+    @POST("employee_attendance_status.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> Getstatus(@FieldMap Map<String, String> params);
+
+    @POST("employees.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> GetAllEmployeeList(@FieldMap Map<String, String> params);
+
+    @POST("categories.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> GetCategoryList(@FieldMap Map<String, String> params);
+
+    @POST("products.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> GetProductList(@FieldMap Map<String, String> params);
 
 
 }

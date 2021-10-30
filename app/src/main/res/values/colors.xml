@@ -12,6 +12,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="mainbg_color">#DBDBDB</color>
+    <color name="mainbg_color">#74DBDBDB</color>
+    <color name="header_bg">#6173C0E0</color>
+
+
 
 </resources>

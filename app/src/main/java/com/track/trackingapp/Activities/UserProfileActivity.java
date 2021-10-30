@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,8 @@ public class UserProfileActivity extends AppCompatActivity {
     @BindView(R.id.doneBtn)
     Button doneBtn;
     private static final int PICKFILE_RESULT_CODE = 2;
+    @BindView(R.id.back)
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,13 @@ public class UserProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setupNetwork();
         callProfileData();
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,4 +143,11 @@ public class UserProfileActivity extends AppCompatActivity {
         mApiManager = new ApiManager(this, mInterFace);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(UserProfileActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

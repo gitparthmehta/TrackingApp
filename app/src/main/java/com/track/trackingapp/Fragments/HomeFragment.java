@@ -1,8 +1,4 @@
-package com.track.trackingapp.Activities;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+package com.track.trackingapp.Fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -17,11 +13,16 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -36,7 +37,6 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -44,42 +44,26 @@ import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.track.trackingapp.Activities.HomeActivity;
+import com.track.trackingapp.Activities.LoginActivity;
 import com.track.trackingapp.GlobalClass.Constants;
 import com.track.trackingapp.GlobalClass.LocationTrack;
 import com.track.trackingapp.GlobalClass.PreferenceHelper;
 import com.track.trackingapp.R;
-import com.track.trackingapp.models.LoginModel;
 import com.track.trackingapp.restApi.ApiManager;
 import com.track.trackingapp.restApi.ApiResponseInterface;
 import com.track.trackingapp.restApi.AppConstant;
 import com.track.trackingapp.restApi.Response.BaseReponseBody;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class LoginActivity extends AppCompatActivity {
-
-
-    @BindView(R.id.edtEmail)
-    EditText edtEmail;
-    @BindView(R.id.edtMobile)
-    EditText edtMobile;
-    @BindView(R.id.edtPassword)
-    EditText edtPassword;
-
-    @BindView(R.id.btnLogin)
-    Button btnLogin;
-
-    private ApiManager mApiManager;
-    private ApiResponseInterface mInterFace;
-    ArrayList<LoginModel> loginModels;
+public class HomeFragment extends Fragment {
     LocationTrack locationTrack;
     Geocoder geocoder;
     List<Address> addresses;
@@ -102,31 +86,151 @@ public class LoginActivity extends AppCompatActivity {
     private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
     private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 5000;
     private static final int REQUEST_CHECK_SETTINGS = 100;
+    private ApiManager mApiManager;
+    private ApiResponseInterface mInterFace;
 
-    @BindView(R.id.txt_Forgotpassword)
-    TextView txt_Forgotpassword;
+    Button btnCheckIn;
+    Button btnCheckOut;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        setHasOptionsMenu(true);
+
+        return rootView;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //you can set the title for your toolbar here for different fragments different titles
+        getActivity().setTitle("Home");
 
-        try {
-            String token = FirebaseInstanceId.getInstance().getToken();
-            PreferenceHelper.putString(Constants.token, token);
-            Log.d("device_id",token);
-        } catch (Exception e) {
 
-        }
+        btnCheckIn=view.findViewById(R.id.btnCheckIn);
+        btnCheckOut=view.findViewById(R.id.btnCheckOut);
         init();
         requestPermission();
         setupNetwork();
+        GetStatus();
         clickListner();
+
+    }
+
+    private void clickListner() {
+        btnCheckIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeCheckIncall();
+            }
+        });
+        btnCheckOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makeCheckOutcall();
+            }
+        });
+    }
+
+    public void GetStatus() {
+        if (Constants.checkInternet(getActivity())) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("user_id", PreferenceHelper.getString(Constants.user_id, ""));
+            params.put("device_id", PreferenceHelper.getString(Constants.token, ""));
+            mApiManager.makeCommonRequest(params, AppConstant.USERSTATUS);
+        }
+    }
+
+    private void setupNetwork() {
+        mInterFace = new ApiResponseInterface() {
+
+            @Override
+            public void isError(String errorMsg, int errorCode) {
+                if (errorCode == AppConstant.ERROR_CODE) {
+                    // error from server
+                    //showStatusDialog(errorMsg);
+                } else if (errorCode == AppConstant.NO_NETWORK_ERROR_CODE) {
+                    // show no network screen with refresh button
+                    Constants.showNoInternetDialog(getActivity());
+                }
+            }
+
+            @Override
+            public void isUserDisabled(String errorMsg, int errorCode) {
+
+            }
+
+            @Override
+            public void isSuccess(Object response, int ServiceCode) {
+                if (ServiceCode == AppConstant.CHECKIN) {
+                    System.out.println("CHECKIN Response:" + String.valueOf(response.toString()));
+                    BaseReponseBody res = (BaseReponseBody) response;
+                    Toast.makeText(getActivity(), res.getMsg().toString(), Toast.LENGTH_LONG).show();
+                    GetStatus();
+                    //invalidTokenshowDialog(getActivity());
+
+                } else if (ServiceCode == AppConstant.CHECKOUT) {
+                    System.out.println("CHECKOUT Response:" + String.valueOf(response.toString()));
+                    BaseReponseBody res = (BaseReponseBody) response;
+                    Toast.makeText(getActivity(), res.getMsg().toString(), Toast.LENGTH_LONG).show();
+                    GetStatus();
+
+                    //invalidTokenshowDialog(getActivity());
+
+                } else if (ServiceCode == AppConstant.USERSTATUS) {
+                    System.out.println("CHECKOUT Response:" + String.valueOf(response.toString()));
+                    BaseReponseBody res = (BaseReponseBody) response;
+//                    Toast.makeText(getActivity(), res.getMsg().toString(), Toast.LENGTH_LONG).show();
+
+                    String user_status = res.getUser_status();
+                    String status = String.valueOf(res.getStatus());
+
+                    if (status.equals("0")) {
+                        btnCheckIn.setVisibility(View.VISIBLE);
+                        btnCheckOut.setVisibility(View.GONE);
+                    }
+                    if (user_status.equals("2")) {
+
+                        btnCheckIn.setVisibility(View.GONE);
+                        btnCheckOut.setVisibility(View.VISIBLE);
+                    } else {
+                        btnCheckIn.setVisibility(View.VISIBLE);
+                        btnCheckOut.setVisibility(View.GONE);
+                    }
+
+                    //invalidTokenshowDialog(getActivity());
+
+                }
+            }
+        };
+        mApiManager = new ApiManager(getActivity(), mInterFace);
+    }
+
+    public void makeCheckIncall() {
+        if (Constants.checkInternet(getActivity())) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("user_id", PreferenceHelper.getString(Constants.user_id, ""));
+            params.put("device_id", PreferenceHelper.getString(Constants.token, ""));
+            params.put("lat", str_lattitude);
+            params.put("long", str_longitude);
+            mApiManager.makeCommonRequest(params, AppConstant.CHECKIN);
+        }
+    }
+
+    public void makeCheckOutcall() {
+        if (Constants.checkInternet(getActivity())) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("user_id", PreferenceHelper.getString(Constants.user_id, ""));
+            params.put("device_id", PreferenceHelper.getString(Constants.token, ""));
+            params.put("lat", str_lattitude);
+            params.put("long", str_longitude);
+            mApiManager.makeCommonRequest(params, AppConstant.CHECKOUT);
+        }
     }
 
     private void requestPermission() {
-        Dexter.withActivity(this)
+        Dexter.withActivity(getActivity())
                 .withPermissions(
                         Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_FINE_LOCATION)
@@ -157,7 +261,7 @@ public class LoginActivity extends AppCompatActivity {
                 withErrorListener(new PermissionRequestErrorListener() {
                     @Override
                     public void onError(DexterError error) {
-                        Toast.makeText(getApplicationContext(), "Error occurred! ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity().getApplicationContext(), "Error occurred! ", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .onSameThread()
@@ -167,7 +271,7 @@ public class LoginActivity extends AppCompatActivity {
     private void startLocationUpdates() {
         mSettingsClient
                 .checkLocationSettings(mLocationSettingsRequest)
-                .addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+                .addOnSuccessListener(getActivity(), new OnSuccessListener<LocationSettingsResponse>() {
                     @SuppressLint("MissingPermission")
                     @Override
                     public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
@@ -181,7 +285,7 @@ public class LoginActivity extends AppCompatActivity {
                         updateLocationUI();
                     }
                 })
-                .addOnFailureListener(this, new OnFailureListener() {
+                .addOnFailureListener(getActivity(), new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         int statusCode = ((ApiException) e).getStatusCode();
@@ -191,7 +295,7 @@ public class LoginActivity extends AppCompatActivity {
                                     // Show the dialog by calling startResolutionForResult(), and check the
                                     // result in onActivityResult().
                                     ResolvableApiException rae = (ResolvableApiException) e;
-                                    rae.startResolutionForResult(LoginActivity.this, REQUEST_CHECK_SETTINGS);
+                                    rae.startResolutionForResult(getActivity(), REQUEST_CHECK_SETTINGS);
                                 } catch (IntentSender.SendIntentException sie) {
                                 }
                                 break;
@@ -199,7 +303,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String errorMessage = "Location settings are inadequate, and cannot be " +
                                         "fixed here. Fix in Settings.";
 
-                                Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
                         }
 
                         updateLocationUI();
@@ -218,7 +322,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("check_lat", String.valueOf(latitude));
             Log.d("check_long", String.valueOf(longitude));
             Log.d("time", String.valueOf(time));
-            geocoder = new Geocoder(LoginActivity.this, Locale.getDefault());
+            geocoder = new Geocoder(getActivity(), Locale.getDefault());
 
             try {
 
@@ -244,8 +348,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void init() {
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        mSettingsClient = LocationServices.getSettingsClient(this);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        mSettingsClient = LocationServices.getSettingsClient(getActivity());
 
         mLocationCallback = new LocationCallback() {
             @Override
@@ -272,7 +376,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showSettingsDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Need Permissions");
         builder.setMessage("This app needs permission to use this feature. You can grant them in app settings.");
         builder.setPositiveButton("GOTO SETTINGS", new DialogInterface.OnClickListener() {
@@ -280,7 +384,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
                 Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
                 intent.setData(uri);
                 startActivityForResult(intent, 101);
             }
@@ -295,85 +399,5 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void clickListner() {
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                makeLoginCall();
-            }
-        });
-        txt_Forgotpassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, ForgotActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void setupNetwork() {
-        mInterFace = new ApiResponseInterface() {
-
-            @Override
-            public void isError(String errorMsg, int errorCode) {
-                if (errorCode == AppConstant.ERROR_CODE) {
-                    // error from server
-                    //showStatusDialog(errorMsg);
-                } else if (errorCode == AppConstant.NO_NETWORK_ERROR_CODE) {
-                    // show no network screen with refresh button
-                    Constants.showNoInternetDialog(LoginActivity.this);
-                }
-            }
-
-            @Override
-            public void isUserDisabled(String errorMsg, int errorCode) {
-
-            }
-
-            @Override
-            public void isSuccess(Object response, int ServiceCode) {
-                if (ServiceCode == AppConstant.LOGIN) {
-                    System.out.println("LOGIN Response:" + String.valueOf(response.toString()));
-                    BaseReponseBody res = (BaseReponseBody) response;
-                    Toast.makeText(LoginActivity.this, res.getMsg().toString(), Toast.LENGTH_LONG).show();
-
-                    if (res.getStatus() == 1) {
-                        loginModels = res.getLoginModels();
-                        Log.d("email_str", String.valueOf(loginModels.get(0).getUser_id()));
-                        PreferenceHelper.putString(Constants.user_id, String.valueOf(loginModels.get(0).getUser_id()));
-
-                        if (loginModels.size() > 0) {
-                            if (loginModels.get(0).getOtp_enable().equals("1")) {
-                                Intent intent = new Intent(LoginActivity.this, OtpVerificationActivity.class);
-                                startActivity(intent);
-
-                            } else {
-                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                startActivity(intent);
-
-                            }
-                        }
-
-                    } else {
-
-                    }
-                    //invalidTokenshowDialog(LoginActivity.this);
-
-                }
-            }
-        };
-        mApiManager = new ApiManager(this, mInterFace);
-    }
-
-    public void makeLoginCall() {
-        if (Constants.checkInternet(LoginActivity.this)) {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("email", edtEmail.getText().toString().trim());
-            params.put("password", edtPassword.getText().toString().trim());
-            params.put("lat", str_lattitude);
-            params.put("long", str_longitude);
-            params.put("device_id", PreferenceHelper.getString(Constants.token,""));
-            mApiManager.makeCommonRequest(params, AppConstant.LOGIN);
-        }
-    }
 }
+

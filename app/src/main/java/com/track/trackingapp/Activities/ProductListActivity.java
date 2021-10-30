@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,10 +37,14 @@ public class ProductListActivity extends AppCompatActivity {
 
     @BindView(R.id.imgNoData)
     ImageView imgNoData;
+    @BindView(R.id.back)
+    ImageView back;
 
     ProductListAdapter productListAdapter;
-    ArrayList<ProductModel> productModelArrayList= new ArrayList<>();;
-    ArrayList<ProductModel> ListModels= new ArrayList<>();;
+    ArrayList<ProductModel> productModelArrayList = new ArrayList<>();
+    ;
+    ArrayList<ProductModel> ListModels = new ArrayList<>();
+    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,17 @@ public class ProductListActivity extends AppCompatActivity {
 
         setupNetwork();
         callProductList();
+
+        clickListners();
+    }
+
+    private void clickListners() {
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     private void callProductList() {
@@ -106,7 +122,7 @@ public class ProductListActivity extends AppCompatActivity {
                             recyclerProductList.setLayoutManager(new LinearLayoutManager(ProductListActivity.this.getApplicationContext(), LinearLayoutManager.VERTICAL, false));
                             productListAdapter = new ProductListAdapter(getApplicationContext(), ListModels);
                             recyclerProductList.setAdapter(productListAdapter);
-                        }else {
+                        } else {
                             imgNoData.setVisibility(View.VISIBLE);
                             recyclerProductList.setVisibility(View.GONE);
                         }
@@ -119,5 +135,12 @@ public class ProductListActivity extends AppCompatActivity {
             }
         };
         mApiManager = new ApiManager(this, mInterFace);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(ProductListActivity.this, HomeActivity.class);
+        startActivity(intent);
     }
 }

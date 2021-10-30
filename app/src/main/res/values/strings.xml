@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Tracking App</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     //login textfield
 
     <string name="email_text">Email</string>
@@ -31,5 +33,6 @@
     <string name="newpasswordhint_text">Enter a new password </string>
     <string name="reenter_password_text">Re-enter new password </string>
     <string name="confirm_text">Confirm</string>
+    <string name="notmatchpassword_msg">Password could not match</string>
 
 </resources>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +41,8 @@ public class UserListActivity extends AppCompatActivity {
     RecyclerView recycleryViewUserList;
     @BindView(R.id.imgNoData)
     ImageView imgNoData;
+    @BindView(R.id.back)
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,16 @@ public class UserListActivity extends AppCompatActivity {
 
         setupNetwork();
         CallAllUserList();
+        clickListners();
+    }
 
+    private void clickListners() {
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     public void CallAllUserList() {
@@ -121,4 +133,10 @@ public class UserListActivity extends AppCompatActivity {
         mApiManager = new ApiManager(this, mInterFace);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent=new Intent(UserListActivity.this,HomeActivity.class);
+        startActivity(intent);
+    }
 }

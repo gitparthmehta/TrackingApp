@@ -7,93 +7,108 @@
     android:orientation="vertical"
     tools:context=".Activities.UserProfileActivity">
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/top_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:visibility="visible">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/back"
+            android:backgroundTint="@color/white" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/common_20_size"
-            android:layout_marginRight="@dimen/common_20_size"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:text="Profile"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="50dp"
-                android:gravity="center"
-                android:text="Profile"
-                android:textColor="@color/black"
-                android:textSize="@dimen/common_title_size" />
 
-            <TextView
-                android:id="@+id/txtName"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/rect_bg"
-                android:drawableLeft="@drawable/ic_person"
-                android:drawablePadding="@dimen/common_10_size"
-                android:drawableTint="@color/black"
-                android:padding="@dimen/common_20_size"
-                android:singleLine="true"
-                android:text="@string/namehint_text"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_20_size"
+        android:layout_marginTop="@dimen/common_20_size"
+        android:layout_marginRight="@dimen/common_20_size"
+        android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtEmail"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/rect_bg"
-                android:drawableLeft="@drawable/ic_email"
-                android:drawablePadding="@dimen/common_20_size"
-                android:drawableTint="@color/black"
-                android:hint="@string/emailhint_text"
-                android:padding="@dimen/common_20_size"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rect_bg"
+            android:drawableLeft="@drawable/ic_person"
+            android:drawablePadding="@dimen/common_10_size"
+            android:drawableTint="@color/black"
+            android:padding="@dimen/common_20_size"
+            android:singleLine="true"
+            android:text="@string/namehint_text"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
-            <TextView
-                android:id="@+id/edtMobile"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/rect_bg"
-                android:drawableLeft="@drawable/ic_phone"
-                android:drawablePadding="@dimen/common_20_size"
-                android:drawableTint="@color/black"
-                android:hint="@string/phonehint_text"
-                android:padding="@dimen/common_20_size"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
+        <TextView
+            android:id="@+id/txtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rect_bg"
+            android:drawableLeft="@drawable/ic_email"
+            android:drawablePadding="@dimen/common_20_size"
+            android:drawableTint="@color/black"
+            android:hint="@string/emailhint_text"
+            android:padding="@dimen/common_20_size"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
-            <TextView
-                android:id="@+id/edtDob"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/rect_bg"
-                android:drawableLeft="@drawable/ic_date"
-                android:drawablePadding="@dimen/common_20_size"
-                android:drawableTint="@color/black"
-                android:hint="@string/dobhint_text"
-                android:padding="@dimen/common_20_size"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
+        <TextView
+            android:id="@+id/edtMobile"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rect_bg"
+            android:drawableLeft="@drawable/ic_phone"
+            android:drawablePadding="@dimen/common_20_size"
+            android:drawableTint="@color/black"
+            android:hint="@string/phonehint_text"
+            android:padding="@dimen/common_20_size"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
-            <Button
-                android:id="@+id/doneBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="upload"
-                android:visibility="gone" />
-        </LinearLayout>
-    </ScrollView>
+        <TextView
+            android:id="@+id/edtDob"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rect_bg"
+            android:drawableLeft="@drawable/ic_date"
+            android:drawablePadding="@dimen/common_20_size"
+            android:drawableTint="@color/black"
+            android:hint="@string/dobhint_text"
+            android:padding="@dimen/common_20_size"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
+
+        <Button
+            android:id="@+id/doneBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="upload"
+            android:visibility="gone" />
+    </LinearLayout>
 </LinearLayout>

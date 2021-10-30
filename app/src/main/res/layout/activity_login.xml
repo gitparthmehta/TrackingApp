@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mainbg_color"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".Activities.LoginActivity">
 
@@ -78,7 +78,7 @@
                 android:drawablePadding="@dimen/common_15_size"
                 android:drawableTint="@color/black"
                 android:hint="@string/passwordhint_text"
-                android:inputType="numberPassword"
+                android:inputType="textPassword"
                 android:padding="@dimen/common_15_size"
                 android:singleLine="true"
                 android:textColor="@color/black"

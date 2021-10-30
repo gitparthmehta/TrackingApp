@@ -1,45 +1,72 @@
 package com.track.trackingapp.Activities;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
+import com.track.trackingapp.Fragments.HomeFragment;
 import com.track.trackingapp.GlobalClass.Constants;
 import com.track.trackingapp.GlobalClass.PreferenceHelper;
 import com.track.trackingapp.R;
+import com.track.trackingapp.models.LoginModel;
 import com.track.trackingapp.restApi.ApiManager;
 import com.track.trackingapp.restApi.ApiResponseInterface;
 import com.track.trackingapp.restApi.AppConstant;
 import com.track.trackingapp.restApi.Response.BaseReponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.btnCheckIn)
-    Button btnCheckIn;
-    @BindView(R.id.btnCheckOut)
-    Button btnCheckOut;
 
     private ApiManager mApiManager;
     private ApiResponseInterface mInterFace;
 
-    @BindView(R.id.userprofile)
-    Button userprofile;
-    @BindView(R.id.editprofile)
-    Button editprofile;
-    @BindView(R.id.edtcategory)
-    Button edtcategory;
-    @BindView(R.id.btnalluserlist)
-    Button btnalluserlist;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+
+    @BindView(R.id.edtUserName)
+    TextView edtUserName;
+    @BindView(R.id.emailTxt)
+    TextView emailTxt;
+
+    @BindView(R.id.viewProfileLayout)
+    RelativeLayout viewProfileLayout;
+    @BindView(R.id.editprofileLayout)
+    RelativeLayout editprofileLayout;
+
+    @BindView(R.id.categoryLayout)
+    RelativeLayout categoryLayout;
+    @BindView(R.id.userlistLayout)
+    RelativeLayout userlistLayout;
+
+    private static FragmentManager fragmentManager;
+    ArrayList<LoginModel> loginModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +74,17 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         ButterKnife.bind(this);
+
+        fragmentManager = getSupportFragmentManager();
+
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+        GetDefault();
         setupNetwork();
         GetStatus();
         clickListner();
@@ -73,43 +111,24 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void isSuccess(Object response, int ServiceCode) {
-                if (ServiceCode == AppConstant.CHECKIN) {
-                    System.out.println("CHECKIN Response:" + String.valueOf(response.toString()));
+                if (ServiceCode == AppConstant.VIEEPROFILE) {
+                    System.out.println("LOGIN Response:" + String.valueOf(response.toString()));
                     BaseReponseBody res = (BaseReponseBody) response;
                     Toast.makeText(HomeActivity.this, res.getMsg().toString(), Toast.LENGTH_LONG).show();
-                    GetStatus();
-                    //invalidTokenshowDialog(LoginActivity.this);
 
-                } else if (ServiceCode == AppConstant.CHECKOUT) {
-                    System.out.println("CHECKOUT Response:" + String.valueOf(response.toString()));
-                    BaseReponseBody res = (BaseReponseBody) response;
-                    Toast.makeText(HomeActivity.this, res.getMsg().toString(), Toast.LENGTH_LONG).show();
-                    GetStatus();
+                    if (res.getStatus() == 1) {
+                        loginModels = res.getLoginModels();
 
-                    //invalidTokenshowDialog(LoginActivity.this);
+                        if (loginModels.size() > 0) {
+                            edtUserName.setText(loginModels.get(0).getFirst_name() + " " + loginModels.get(0).getLast_name());
+                            emailTxt.setText(loginModels.get(0).getEmail());
 
-                } else if (ServiceCode == AppConstant.USERSTATUS) {
-                    System.out.println("CHECKOUT Response:" + String.valueOf(response.toString()));
-                    BaseReponseBody res = (BaseReponseBody) response;
-//                    Toast.makeText(HomeActivity.this, res.getMsg().toString(), Toast.LENGTH_LONG).show();
+                        }
 
-                    String user_status = res.getUser_status();
-                    String status = String.valueOf(res.getStatus());
-
-                    if (status.equals("0")) {
-                        btnCheckIn.setVisibility(View.VISIBLE);
-                        btnCheckOut.setVisibility(View.GONE);
-                    }
-                    if (user_status.equals("2")) {
-
-                        btnCheckIn.setVisibility(View.GONE);
-                        btnCheckOut.setVisibility(View.VISIBLE);
                     } else {
-                        btnCheckIn.setVisibility(View.VISIBLE);
-                        btnCheckOut.setVisibility(View.GONE);
-                    }
 
-                    //invalidTokenshowDialog(LoginActivity.this);
+                    }
+                    //invalidTokenshowDialog(UserProfileActivity.this);
 
                 }
             }
@@ -117,77 +136,69 @@ public class HomeActivity extends AppCompatActivity {
         mApiManager = new ApiManager(this, mInterFace);
     }
 
-    public void makeCheckIncall() {
-        if (Constants.checkInternet(HomeActivity.this)) {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("user_id", PreferenceHelper.getString(Constants.user_id, ""));
-            params.put("device_id", PreferenceHelper.getString(Constants.token, ""));
-            params.put("lat", "22.9926678");
-            params.put("long", "72.4710177");
-            mApiManager.makeCommonRequest(params, AppConstant.CHECKIN);
-        }
-    }
+
 
     public void GetStatus() {
         if (Constants.checkInternet(HomeActivity.this)) {
             Map<String, String> params = new HashMap<String, String>();
             params.put("user_id", PreferenceHelper.getString(Constants.user_id, ""));
             params.put("device_id", PreferenceHelper.getString(Constants.token, ""));
-            mApiManager.makeCommonRequest(params, AppConstant.USERSTATUS);
+            mApiManager.makeCommonRequest(params, AppConstant.VIEEPROFILE);
         }
     }
 
-    public void makeCheckOutcall() {
-        if (Constants.checkInternet(HomeActivity.this)) {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("user_id", PreferenceHelper.getString(Constants.user_id, ""));
-            params.put("device_id", PreferenceHelper.getString(Constants.token, ""));
-            params.put("lat", "22.9926678");
-            params.put("long", "72.4710177");
-            mApiManager.makeCommonRequest(params, AppConstant.CHECKOUT);
-        }
-    }
 
     private void clickListner() {
-        btnalluserlist.setOnClickListener(new View.OnClickListener() {
+        userlistLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, UserListActivity.class);
                 startActivity(intent);
             }
         });
-        userprofile.setOnClickListener(new View.OnClickListener() {
+        viewProfileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, UserProfileActivity.class);
                 startActivity(intent);
             }
         });
-        editprofile.setOnClickListener(new View.OnClickListener() {
+        editprofileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, EditProfileActivity.class);
                 startActivity(intent);
             }
         });
-        edtcategory.setOnClickListener(new View.OnClickListener() {
+        categoryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, CategoryListActivity.class);
                 startActivity(intent);
             }
         });
-        btnCheckIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                makeCheckIncall();
-            }
-        });
-        btnCheckOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                makeCheckOutcall();
-            }
-        });
+
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
+    private void GetDefault() {
+        Fragment fragment = null;
+        fragment = new HomeFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_framelayout, fragment);
+        fragmentTransaction.commit();
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+        System.exit(0);
     }
 }

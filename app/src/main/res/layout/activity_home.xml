@@ -1,51 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activities.HomeActivity">
+    tools:openDrawer="start">
 
-    <Button
-        android:id="@+id/btnCheckIn"
+    <include
+        layout="@layout/app_bar_drawer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="CHeckIn" />
+        android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/btnCheckOut"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="CHeckOut" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@drawable/drawer_bg"
+        android:fitsSystemWindows="true">
 
-        <Button
-            android:id="@+id/userprofile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="user profile" />
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/editprofile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit profile" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/edtcategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Category" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnalluserlist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="All user" />
-    </LinearLayout>
-</LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="155dp"
+                        android:background="@drawable/drawer_bg"
+                        android:backgroundTint="@color/header_bg"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+                        <ImageView
+                            android:id="@+id/img_profile"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/logo" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/edtUserName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginRight="@dimen/common_30_size"
+                                android:text="Test User"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="18dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/emailTxt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginRight="@dimen/common_30_size"
+                                android:text="View Profile"
+                                android:textColor="@color/colorPrimary" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/viewProfileLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/common_10_size">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_centerInParent="true"
+                                android:layout_gravity="center"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/user_ic" />
+
+                                <TextView
+                                    style="@style/SemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="View Profile"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp" />
+
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerInParent="true"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/next_ic" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/editprofileLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_centerInParent="true"
+                                android:layout_gravity="center"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/user_ic" />
+
+                                <TextView
+                                    style="@style/SemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Edit Profile"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp" />
+
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerInParent="true"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/next_ic" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/categoryLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_centerInParent="true"
+                                android:layout_gravity="center"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/category_ic" />
+
+                                <TextView
+                                    style="@style/SemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Categories"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp" />
+
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerInParent="true"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/next_ic" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/userlistLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_centerInParent="true"
+                                android:layout_gravity="center"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginRight="10dp"
+                                    android:background="@drawable/category_ic" />
+
+                                <TextView
+                                    style="@style/SemiBold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="All User"
+                                    android:textColor="@color/black"
+                                    android:textSize="14sp" />
+
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerInParent="true"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/next_ic" />
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

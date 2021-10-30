@@ -6,23 +6,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activities.EditProfileActivity">
-
     <LinearLayout
+        android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
-        android:orientation="vertical">
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/back"
+            android:backgroundTint="@color/white" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginRight="15dp"
             android:gravity="center"
             android:text="@string/editprofile_title"
             android:textColor="@color/white"
-            android:textSize="@dimen/common_title_size" />
-
+            android:textSize="16dp" />
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -112,7 +123,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/common_20_size"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/rect_bg2"
             android:gravity="center"
             android:text="@string/submit_txt"
             android:textColor="@color/white" />

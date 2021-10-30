@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,14 +30,18 @@ import butterknife.ButterKnife;
 public class CategoryListActivity extends AppCompatActivity {
     private ApiManager mApiManager;
     private ApiResponseInterface mInterFace;
-    ArrayList<CategoryModel> categoryModels= new ArrayList<>();;
-    ArrayList<CategoryModel> ListModels= new ArrayList<>();;
+    ArrayList<CategoryModel> categoryModels = new ArrayList<>();
+    ;
+    ArrayList<CategoryModel> ListModels = new ArrayList<>();
+    ;
     CategoryListAdapter categoryListAdapter;
 
     @BindView(R.id.recycleryVieCategoryList)
     RecyclerView recycleryVieCategoryList;
     @BindView(R.id.imgNoData)
     ImageView imgNoData;
+    @BindView(R.id.back)
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,16 @@ public class CategoryListActivity extends AppCompatActivity {
 
         setupNetwork();
         callCategoryList();
+        clickListners();
+    }
+
+    private void clickListners() {
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     public void callCategoryList() {
@@ -101,7 +116,7 @@ public class CategoryListActivity extends AppCompatActivity {
                             recycleryVieCategoryList.setLayoutManager(new LinearLayoutManager(CategoryListActivity.this.getApplicationContext(), LinearLayoutManager.VERTICAL, false));
                             categoryListAdapter = new CategoryListAdapter(getApplicationContext(), ListModels);
                             recycleryVieCategoryList.setAdapter(categoryListAdapter);
-                        }else {
+                        } else {
                             imgNoData.setVisibility(View.VISIBLE);
                             recycleryVieCategoryList.setVisibility(View.GONE);
                         }
@@ -116,4 +131,10 @@ public class CategoryListActivity extends AppCompatActivity {
         mApiManager = new ApiManager(this, mInterFace);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(CategoryListActivity.this, HomeActivity.class);
+        startActivity(intent);
+    }
 }

@@ -54,9 +54,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        holder.categoryname.setText("Category Name : " + participantsListModels.get(position).getName());
+        holder.categoryname.setText("Product Name : " + participantsListModels.get(position).getName());
         int index = position + 1;
-        holder.categorytype.setText("Category Type : " + participantsListModels.get(position).getCategory());
+        holder.categorytype.setText("Product Category : " + participantsListModels.get(position).getCategory());
     }
 
 

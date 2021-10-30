@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +49,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private ApiManager mApiManager;
     private ApiResponseInterface mInterFace;
     ArrayList<LoginModel> loginModels;
-
+    @BindView(R.id.back)
+    ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,13 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void clickListner() {
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,5 +157,14 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         };
         mApiManager = new ApiManager(this, mInterFace);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(EditProfileActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

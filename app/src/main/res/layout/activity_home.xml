@@ -29,5 +29,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="user profile" />
+
+        <Button
+            android:id="@+id/editprofile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit profile" />
+
+        <Button
+            android:id="@+id/edtcategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category" />
+
+        <Button
+            android:id="@+id/btnalluserlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All user" />
     </LinearLayout>
 </LinearLayout>

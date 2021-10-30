@@ -23,6 +23,14 @@
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.TrackingApp">
+
+        <activity
+            android:name=".Activities.UserMapActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TrackingApp2" />
+        <activity
+            android:name=".Activities.EditProfileActivity"
+            android:exported="true" />
         <activity
             android:name=".Activities.ProductListActivity"
             android:exported="true" />
@@ -31,7 +39,8 @@
             android:exported="true" />
         <activity
             android:name=".Activities.UserListActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.TrackingApp2" />
         <activity
             android:name=".Activities.UserProfileActivity"
             android:exported="true">
@@ -84,6 +93,12 @@
         <activity
             android:name=".Activities.MainActivity"
             android:exported="true" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCnFLyg0fmSsVcqZFEE_00KvVxPg7QT364" />
+
+
     </application>
 
 </manifest>

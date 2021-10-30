@@ -100,6 +100,12 @@ public class ApiManager {
         if (requestCode == AppConstant.PRODUCTLIST) {
             call = apiService.GetProductList(params);
         }
+        if (requestCode == AppConstant.EDITPROFILE) {
+            call = apiService.SetEditProfile(params);
+        }
+        if (requestCode == AppConstant.USERLOCATION) {
+            call = apiService.GetUserLocation(params);
+        }
 
         call.enqueue(new Callback<BaseReponseBody>() {
             @Override

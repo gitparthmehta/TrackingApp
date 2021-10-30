@@ -1,14 +1,21 @@
 package com.track.trackingapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.track.trackingapp.Adapters.CategoryListAdapter;
+import com.track.trackingapp.Adapters.UserListAdapter;
 import com.track.trackingapp.GlobalClass.Constants;
 import com.track.trackingapp.GlobalClass.PreferenceHelper;
 import com.track.trackingapp.R;
+import com.track.trackingapp.models.CategoryModel;
 import com.track.trackingapp.models.LoginModel;
 import com.track.trackingapp.restApi.ApiManager;
 import com.track.trackingapp.restApi.ApiResponseInterface;
@@ -19,12 +26,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class UserListActivity extends AppCompatActivity {
     private ApiManager mApiManager;
     private ApiResponseInterface mInterFace;
-    ArrayList<LoginModel> loginModels;
+    ArrayList<LoginModel> loginModels=new ArrayList<>();
+    ArrayList<LoginModel> ListModels= new ArrayList<>();;
+
+    UserListAdapter userListAdapter;
+    @BindView(R.id.recycleryViewUserList)
+    RecyclerView recycleryViewUserList;
+    @BindView(R.id.imgNoData)
+    ImageView imgNoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +51,7 @@ public class UserListActivity extends AppCompatActivity {
         CallAllUserList();
 
     }
+
     public void CallAllUserList() {
         if (Constants.checkInternet(UserListActivity.this)) {
             Map<String, String> params = new HashMap<String, String>();
@@ -75,7 +91,23 @@ public class UserListActivity extends AppCompatActivity {
                         loginModels = res.getLoginModels();
 
                         if (loginModels.size() > 0) {
-                           Log.d("loginModels", String.valueOf(loginModels.size()));
+                            imgNoData.setVisibility(View.GONE);
+                            recycleryViewUserList.setVisibility(View.VISIBLE);
+                            for (int i = 0; i < loginModels.size(); i++) {
+
+                                LoginModel listModel = new LoginModel();
+                                listModel.setUser_id(loginModels.get(i).getUser_id());
+                                listModel.setFirst_name(loginModels.get(i).getFirst_name());
+                                listModel.setLast_name(loginModels.get(i).getLast_name());
+                                listModel.setEmail(loginModels.get(i).getEmail());
+                                ListModels.add(listModel);
+                            }
+                            recycleryViewUserList.setLayoutManager(new LinearLayoutManager(UserListActivity.this.getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+                            userListAdapter = new UserListAdapter(getApplicationContext(), ListModels);
+                            recycleryViewUserList.setAdapter(userListAdapter);
+                        }else {
+                            imgNoData.setVisibility(View.VISIBLE);
+                            recycleryViewUserList.setVisibility(View.GONE);
                         }
 
                     } else {

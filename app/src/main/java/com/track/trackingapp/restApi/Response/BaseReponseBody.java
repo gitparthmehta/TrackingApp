@@ -3,6 +3,7 @@ package com.track.trackingapp.restApi.Response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.track.trackingapp.models.CategoryModel;
+import com.track.trackingapp.models.LocationModel;
 import com.track.trackingapp.models.LoginModel;
 import com.track.trackingapp.models.ProductModel;
 
@@ -43,6 +44,10 @@ public class BaseReponseBody {
     @Expose
     private ArrayList<ProductModel> productModel;
 
+    @SerializedName("Userlocation")
+    @Expose
+    private ArrayList<LocationModel> locationModels;
+
     public int getStatus() {
         return status;
     }
@@ -76,6 +81,9 @@ public class BaseReponseBody {
     }
     public ArrayList<ProductModel> getProductModel() {
         return productModel;
+    }
+    public ArrayList<LocationModel> getLocationModels() {
+        return locationModels;
     }
 
 }

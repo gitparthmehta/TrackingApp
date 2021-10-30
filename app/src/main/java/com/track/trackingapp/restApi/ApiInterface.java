@@ -76,5 +76,20 @@ public interface ApiInterface {
     @Headers("Content-Type:application/x-www-form-urlencoded")
     Call<BaseReponseBody> GetProductList(@FieldMap Map<String, String> params);
 
+    @POST("edit_profile.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> SetEditProfile(@FieldMap Map<String, String> params);
+
+    @POST("employee_track_location.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> AddUserLocation(@FieldMap Map<String, String> params);
+
+    @POST("get_location.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> GetUserLocation(@FieldMap Map<String, String> params);
+
 
 }

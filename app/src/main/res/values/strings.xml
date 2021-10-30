@@ -6,7 +6,11 @@
     <string name="email_text">Email</string>
     <string name="emailhint_text">Enter Your Email</string>
     <string name="namehint_text">Enter Your Name</string>
+    <string name="fnamehint_text">Enter Your First Name</string>
+    <string name="lnamehint_text">Enter Your Last Name</string>
     <string name="phonehint_text">Enter your Phone number</string>
+    <string name="dobhint_text">Enter your DOB</string>
+    <string name="submit_txt">Submit</string>
 
     <string name="password_text">Password</string>
     <string name="passwordhint_text">Enter Your Password</string>

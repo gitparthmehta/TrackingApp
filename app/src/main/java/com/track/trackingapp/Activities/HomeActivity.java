@@ -34,6 +34,13 @@ public class HomeActivity extends AppCompatActivity {
 
     @BindView(R.id.userprofile)
     Button userprofile;
+    @BindView(R.id.editprofile)
+    Button editprofile;
+    @BindView(R.id.edtcategory)
+    Button edtcategory;
+    @BindView(R.id.btnalluserlist)
+    Button btnalluserlist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,18 +93,18 @@ public class HomeActivity extends AppCompatActivity {
                     BaseReponseBody res = (BaseReponseBody) response;
 //                    Toast.makeText(HomeActivity.this, res.getMsg().toString(), Toast.LENGTH_LONG).show();
 
-                    String user_status=res.getUser_status();
-                    String status= String.valueOf(res.getStatus());
+                    String user_status = res.getUser_status();
+                    String status = String.valueOf(res.getStatus());
 
-                    if (status.equals("0")){
+                    if (status.equals("0")) {
                         btnCheckIn.setVisibility(View.VISIBLE);
                         btnCheckOut.setVisibility(View.GONE);
                     }
-                    if (user_status.equals("2")){
+                    if (user_status.equals("2")) {
 
                         btnCheckIn.setVisibility(View.GONE);
                         btnCheckOut.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         btnCheckIn.setVisibility(View.VISIBLE);
                         btnCheckOut.setVisibility(View.GONE);
                     }
@@ -142,11 +149,31 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void clickListner() {
-
+        btnalluserlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, UserListActivity.class);
+                startActivity(intent);
+            }
+        });
         userprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(HomeActivity.this,CategoryListActivity.class);
+                Intent intent = new Intent(HomeActivity.this, UserProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+        editprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+        edtcategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, CategoryListActivity.class);
                 startActivity(intent);
             }
         });

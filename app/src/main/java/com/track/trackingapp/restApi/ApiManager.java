@@ -106,6 +106,9 @@ public class ApiManager {
         if (requestCode == AppConstant.USERLOCATION) {
             call = apiService.GetUserLocation(params);
         }
+        if (requestCode == AppConstant.ADDUSERLOCATION) {
+            call = apiService.AddUserLocation(params);
+        }
 
         call.enqueue(new Callback<BaseReponseBody>() {
             @Override

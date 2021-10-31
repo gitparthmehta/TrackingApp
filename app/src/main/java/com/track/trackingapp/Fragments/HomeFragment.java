@@ -178,6 +178,13 @@ public class HomeFragment extends Fragment {
 
                     //invalidTokenshowDialog(getActivity());
 
+                } else if (ServiceCode == AppConstant.ADDUSERLOCATION) {
+                    System.out.println("ADDUSERLOCATION Response:" + String.valueOf(response.toString()));
+                    BaseReponseBody res = (BaseReponseBody) response;
+//                    Toast.makeText(getActivity(), res.getMsg().toString(), Toast.LENGTH_LONG).show();
+
+                    //invalidTokenshowDialog(getActivity());
+
                 } else if (ServiceCode == AppConstant.USERSTATUS) {
                     System.out.println("CHECKOUT Response:" + String.valueOf(response.toString()));
                     BaseReponseBody res = (BaseReponseBody) response;
@@ -198,7 +205,7 @@ public class HomeFragment extends Fragment {
                         btnCheckIn.setVisibility(View.VISIBLE);
                         btnCheckOut.setVisibility(View.GONE);
                     }
-
+                    addLocationCall();
                     //invalidTokenshowDialog(getActivity());
 
                 }
@@ -226,6 +233,17 @@ public class HomeFragment extends Fragment {
             params.put("lat", str_lattitude);
             params.put("long", str_longitude);
             mApiManager.makeCommonRequest(params, AppConstant.CHECKOUT);
+        }
+    }
+
+    public void addLocationCall() {
+        if (Constants.checkInternet(getActivity())) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("user_id", PreferenceHelper.getString(Constants.user_id, ""));
+            params.put("device_id", PreferenceHelper.getString(Constants.token, ""));
+            params.put("lat", str_lattitude);
+            params.put("long", str_longitude);
+            mApiManager.makeCommonRequest(params, AppConstant.ADDUSERLOCATION);
         }
     }
 

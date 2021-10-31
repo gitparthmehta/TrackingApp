@@ -19,6 +19,7 @@ public class AppConstant {
     public static final int PRODUCTLIST = 11;
     public static final int EDITPROFILE = 12;
     public static final int USERLOCATION = 13;
+    public static final int ADDUSERLOCATION = 14;
 
 
 }

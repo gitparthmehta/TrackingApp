@@ -5,11 +5,13 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.track.trackingapp.R;
 import com.track.trackingapp.models.ProductModel;
 
@@ -28,6 +30,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         TextView categoryname;
         @BindView(R.id.categorytype)
         TextView categorytype;
+        @BindView(R.id.img)
+        ImageView img;
 
         public MyViewHolder(View view) {
             super(view);
@@ -57,6 +61,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         holder.categoryname.setText("Product Name : " + participantsListModels.get(position).getName());
         int index = position + 1;
         holder.categorytype.setText("Product Category : " + participantsListModels.get(position).getCategory());
+
+        Glide.with(mContext)
+                .load(participantsListModels.get(position).getImage())
+                .into(holder.img);
+
     }
 
 

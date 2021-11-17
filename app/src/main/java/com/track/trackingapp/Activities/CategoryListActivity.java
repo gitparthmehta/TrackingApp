@@ -111,6 +111,7 @@ public class CategoryListActivity extends AppCompatActivity {
                                 listModel.setName(categoryModels.get(i).getName());
                                 listModel.setType_id(categoryModels.get(i).getType_id());
                                 listModel.setType(categoryModels.get(i).getType());
+                                listModel.setImage(categoryModels.get(i).getImage());
                                 ListModels.add(listModel);
                             }
                             recycleryVieCategoryList.setLayoutManager(new LinearLayoutManager(CategoryListActivity.this.getApplicationContext(), LinearLayoutManager.VERTICAL, false));

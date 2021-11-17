@@ -117,6 +117,7 @@ public class ProductListActivity extends AppCompatActivity {
                                 listModel.setName(productModelArrayList.get(i).getName());
                                 listModel.setId(productModelArrayList.get(i).getId());
                                 listModel.setCategory(productModelArrayList.get(i).getCategory());
+                                listModel.setImage(productModelArrayList.get(i).getImage());
                                 ListModels.add(listModel);
                             }
                             recyclerProductList.setLayoutManager(new LinearLayoutManager(ProductListActivity.this.getApplicationContext(), LinearLayoutManager.VERTICAL, false));

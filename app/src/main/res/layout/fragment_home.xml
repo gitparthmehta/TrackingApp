@@ -6,24 +6,60 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <Button
-        android:visibility="gone"
-        android:id="@+id/btnCheckIn"
-        android:layout_width="250dp"
+    <LinearLayout
+        android:id="@+id/checkinoutLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rect_bg2"
-        android:text="CHeckIn"
-        android:textColor="@color/white"
-        android:textSize="@dimen/common_16_size" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <Button
-        android:id="@+id/btnCheckOut"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rect_bg2"
-        android:text="CHeckOut"
-        android:textColor="@color/white"
-        android:textSize="@dimen/common_16_size" />
+        <Button
+            android:id="@+id/btnCheckIn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_bg2"
+            android:text="CHeckIn"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_16_size"
+            android:visibility="gone" />
 
+        <Button
+            android:id="@+id/btnCheckOut"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_bg2"
+            android:text="CHeckOut"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_16_size" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_layout"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="5dp"
+        android:visibility="gone">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerviewTaskList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp" />
+
+        <ImageView
+            android:id="@+id/imgNoData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/nodata_found"
+            android:backgroundTint="@color/colorPrimary"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
 </LinearLayout>

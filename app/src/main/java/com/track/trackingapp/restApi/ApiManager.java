@@ -109,6 +109,12 @@ public class ApiManager {
         if (requestCode == AppConstant.ADDUSERLOCATION) {
             call = apiService.AddUserLocation(params);
         }
+        if (requestCode == AppConstant.ADDTASK) {
+            call = apiService.AddTask(params);
+        }
+        if (requestCode == AppConstant.TASKLIST) {
+            call = apiService.TaskList(params);
+        }
 
         call.enqueue(new Callback<BaseReponseBody>() {
             @Override

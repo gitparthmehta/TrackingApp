@@ -9,6 +9,8 @@
     <string name="emailhint_text">Enter Your Email</string>
     <string name="namehint_text">Enter Your Name</string>
     <string name="fnamehint_text">Enter Your First Name</string>
+    <string name="title_txt">Enter Title</string>
+    <string name="desc_txt">Enter Description</string>
     <string name="lnamehint_text">Enter Your Last Name</string>
     <string name="phonehint_text">Enter your Phone number</string>
     <string name="dobhint_text">Enter your DOB</string>
@@ -25,6 +27,7 @@
     <string name="forgotpassword_text">Forgot Password? Click here </string>
     <string name="login_text">Login</string>
     <string name="reset_text">Reset</string>
+    <string name="addtask_text">Add Task</string>
     <string name="recive_link">Didn\'t Receive the link? Click here </string>
 
     //reset password
@@ -35,4 +38,10 @@
     <string name="confirm_text">Confirm</string>
     <string name="notmatchpassword_msg">Password could not match</string>
 
+
+    <string-array name="locale_array">
+        <item>Select Employee(optional)</item>
+        <!--        <item>Dummy data2</item>-->
+        <!--        <item>Dummy data3</item>-->
+    </string-array>
 </resources>

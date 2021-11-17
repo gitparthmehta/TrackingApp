@@ -17,12 +17,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -46,16 +51,22 @@ import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.track.trackingapp.Activities.HomeActivity;
 import com.track.trackingapp.Activities.LoginActivity;
+import com.track.trackingapp.Activities.UserListActivity;
+import com.track.trackingapp.Adapters.TaskListAdapter;
+import com.track.trackingapp.Adapters.UserListAdapter;
 import com.track.trackingapp.GlobalClass.Constants;
 import com.track.trackingapp.GlobalClass.LocationTrack;
 import com.track.trackingapp.GlobalClass.PreferenceHelper;
 import com.track.trackingapp.R;
+import com.track.trackingapp.models.LoginModel;
+import com.track.trackingapp.models.TaskModel;
 import com.track.trackingapp.restApi.ApiManager;
 import com.track.trackingapp.restApi.ApiResponseInterface;
 import com.track.trackingapp.restApi.AppConstant;
 import com.track.trackingapp.restApi.Response.BaseReponseBody;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -83,15 +94,21 @@ public class HomeFragment extends Fragment {
     private LocationCallback mLocationCallback;
     private Location mCurrentLocation;
 
-    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
-    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 5000;
+    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 50000;
+    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 50000;
     private static final int REQUEST_CHECK_SETTINGS = 100;
     private ApiManager mApiManager;
     private ApiResponseInterface mInterFace;
 
     Button btnCheckIn;
     Button btnCheckOut;
-
+    ArrayList<TaskModel> taskModels = new ArrayList<>();
+    ArrayList<TaskModel> ListModels = new ArrayList<>();
+    TaskListAdapter taskListAdapter;
+    LinearLayout checkinoutLayout;
+    FrameLayout frameLayout;
+    RecyclerView recyclerviewTaskList;
+    ImageView imgNoData;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -108,14 +125,18 @@ public class HomeFragment extends Fragment {
         getActivity().setTitle("Home");
 
 
-        btnCheckIn=view.findViewById(R.id.btnCheckIn);
-        btnCheckOut=view.findViewById(R.id.btnCheckOut);
+        btnCheckIn = view.findViewById(R.id.btnCheckIn);
+        btnCheckOut = view.findViewById(R.id.btnCheckOut);
+        checkinoutLayout = view.findViewById(R.id.checkinoutLayout);
+        frameLayout = view.findViewById(R.id.frameLayout);
+        recyclerviewTaskList = view.findViewById(R.id.recyclerviewTaskList);
+        imgNoData = view.findViewById(R.id.imgNoData);
         init();
         requestPermission();
         setupNetwork();
         GetStatus();
         clickListner();
-
+        GetAllTask();
     }
 
     private void clickListner() {
@@ -139,6 +160,17 @@ public class HomeFragment extends Fragment {
             params.put("user_id", PreferenceHelper.getString(Constants.user_id, ""));
             params.put("device_id", PreferenceHelper.getString(Constants.token, ""));
             mApiManager.makeCommonRequest(params, AppConstant.USERSTATUS);
+        }
+    }
+
+    public void GetAllTask() {
+        if (Constants.checkInternet(getActivity())) {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("user_id", PreferenceHelper.getString(Constants.user_id, ""));
+            params.put("device_id", PreferenceHelper.getString(Constants.token, ""));
+            params.put("filter_by", "");
+            params.put("filter_value", "");
+            mApiManager.makeCommonRequest(params, AppConstant.TASKLIST);
         }
     }
 
@@ -205,9 +237,34 @@ public class HomeFragment extends Fragment {
                         btnCheckIn.setVisibility(View.VISIBLE);
                         btnCheckOut.setVisibility(View.GONE);
                     }
-                    addLocationCall();
                     //invalidTokenshowDialog(getActivity());
 
+                } else if (ServiceCode == AppConstant.TASKLIST) {
+                    System.out.println("TASKLIST Response:" + String.valueOf(response.toString()));
+                    BaseReponseBody res = (BaseReponseBody) response;
+//                    Toast.makeText(getActivity(), res.getMsg().toString(), Toast.LENGTH_LONG).show();
+                    taskModels = res.getTaskModels();
+                    if (taskModels.size() > 0) {
+                        imgNoData.setVisibility(View.GONE);
+                        recyclerviewTaskList.setVisibility(View.VISIBLE);
+                        for (int i = 0; i < taskModels.size(); i++) {
+
+                            TaskModel listModel = new TaskModel();
+                            listModel.setId(taskModels.get(i).getId());
+                            listModel.setAssigned_user(taskModels.get(i).getAssigned_user());
+                            listModel.setRef_id(taskModels.get(i).getRef_id());
+                            listModel.setTitle(taskModels.get(i).getTitle());
+                            listModel.setDescription(taskModels.get(i).getDescription());
+                            ListModels.add(listModel);
+                        }
+                        recyclerviewTaskList.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+                        taskListAdapter = new TaskListAdapter(getActivity().getApplicationContext(), ListModels);
+                        recyclerviewTaskList.setAdapter(taskListAdapter);
+                    }else {
+                        imgNoData.setVisibility(View.VISIBLE);
+                        recyclerviewTaskList.setVisibility(View.GONE);
+                    }
+                    Log.d("taskdata", String.valueOf(taskModels.size()));
                 }
             }
         };
@@ -357,6 +414,9 @@ public class HomeFragment extends Fragment {
                 Log.d("str_lattitude", str_lattitude);
                 Log.d("str_longitude", str_longitude);
                 Log.d("address", address);
+
+                addLocationCall();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -366,6 +426,15 @@ public class HomeFragment extends Fragment {
     }
 
     private void init() {
+        if (PreferenceHelper.getBoolean(Constants.is_dealer,false)==true){
+            frameLayout.setVisibility(View.VISIBLE);
+            checkinoutLayout.setVisibility(View.GONE);
+
+        }else {
+            checkinoutLayout.setVisibility(View.VISIBLE);
+            frameLayout.setVisibility(View.GONE);
+
+        }
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         mSettingsClient = LocationServices.getSettingsClient(getActivity());
 

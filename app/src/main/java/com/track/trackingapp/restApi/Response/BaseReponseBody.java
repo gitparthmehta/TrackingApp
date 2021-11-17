@@ -6,6 +6,7 @@ import com.track.trackingapp.models.CategoryModel;
 import com.track.trackingapp.models.LocationModel;
 import com.track.trackingapp.models.LoginModel;
 import com.track.trackingapp.models.ProductModel;
+import com.track.trackingapp.models.TaskModel;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,9 @@ public class BaseReponseBody {
     @SerializedName("Userlocation")
     @Expose
     private ArrayList<LocationModel> locationModels;
+    @SerializedName("tasks")
+    @Expose
+    private ArrayList<TaskModel> taskModels;
 
     public int getStatus() {
         return status;
@@ -84,6 +88,10 @@ public class BaseReponseBody {
     }
     public ArrayList<LocationModel> getLocationModels() {
         return locationModels;
+    }
+
+    public ArrayList<TaskModel> getTaskModels() {
+        return taskModels;
     }
 
 }

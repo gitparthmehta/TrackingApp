@@ -42,6 +42,7 @@ public class Constants {
     public static final String profileimage = "profileimage";
     public static final String participant_category = "participant_category";
     public static final String participant_category_title = "participant_category_title";
+    public static final String is_dealer = "is_dealer";
     public static String chooseDateTenureCompletion = "";
 
     public static AlertDialog dialog;

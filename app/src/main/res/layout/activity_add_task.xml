@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activities.AddTaskActivity">
+
+
+    <LinearLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/back"
+            android:backgroundTint="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:text="@string/addtask_text"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/edtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/common_20_size"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="@dimen/common_20_size"
+        android:background="@drawable/rect_bg"
+        android:drawableLeft="@drawable/ic_person"
+        android:drawablePadding="@dimen/common_10_size"
+        android:drawableTint="@color/black"
+        android:padding="@dimen/common_20_size"
+        android:singleLine="true"
+        android:text="@string/title_txt"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
+
+    <EditText
+        android:id="@+id/edtdesc"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/common_20_size"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="@dimen/common_20_size"
+        android:background="@drawable/rect_bg"
+        android:drawableLeft="@drawable/ic_person"
+        android:drawablePadding="@dimen/common_10_size"
+        android:drawableTint="@color/black"
+        android:padding="@dimen/common_20_size"
+        android:singleLine="true"
+        android:text="@string/desc_txt"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
+
+    <Spinner
+        android:id="@+id/spinneremployee"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/common_20_size"
+        android:layout_marginTop="@dimen/common_20_size"
+        android:layout_marginRight="@dimen/common_20_size"
+        android:background="@drawable/rect_bg"
+        android:entries="@array/locale_array"
+        android:padding="@dimen/common_10_size"
+        android:popupBackground="@color/white"
+        android:theme="@style/spinnerTheme" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/common_20_size"
+        android:background="@drawable/rect_bg2"
+        android:gravity="center"
+        android:text="@string/submit_txt"
+        android:textColor="@color/white" />
+
+</LinearLayout>

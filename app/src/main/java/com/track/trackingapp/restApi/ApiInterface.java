@@ -91,5 +91,13 @@ public interface ApiInterface {
     @Headers("Content-Type:application/x-www-form-urlencoded")
     Call<BaseReponseBody> GetUserLocation(@FieldMap Map<String, String> params);
 
+    @POST("add_task.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> AddTask(@FieldMap Map<String, String> params);
 
+    @POST("tasks.php")
+    @FormUrlEncoded
+    @Headers("Content-Type:application/x-www-form-urlencoded")
+    Call<BaseReponseBody> TaskList(@FieldMap Map<String, String> params);
 }

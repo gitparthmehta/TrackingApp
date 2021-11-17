@@ -344,10 +344,12 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (loginModels.size() > 0) {
                             if (loginModels.get(0).getOtp_enable().equals("1")) {
+                                PreferenceHelper.putBoolean(Constants.is_dealer,false);
                                 Intent intent = new Intent(LoginActivity.this, OtpVerificationActivity.class);
                                 startActivity(intent);
 
                             } else {
+                                PreferenceHelper.putBoolean(Constants.is_dealer,true);
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(intent);
 

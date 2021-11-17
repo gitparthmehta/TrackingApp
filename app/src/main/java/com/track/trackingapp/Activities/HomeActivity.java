@@ -64,6 +64,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     RelativeLayout categoryLayout;
     @BindView(R.id.userlistLayout)
     RelativeLayout userlistLayout;
+    @BindView(R.id.addtask)
+    RelativeLayout addtask;
 
     private static FragmentManager fragmentManager;
     ArrayList<LoginModel> loginModels;
@@ -114,7 +116,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 if (ServiceCode == AppConstant.VIEEPROFILE) {
                     System.out.println("LOGIN Response:" + String.valueOf(response.toString()));
                     BaseReponseBody res = (BaseReponseBody) response;
-                    Toast.makeText(HomeActivity.this, res.getMsg().toString(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(HomeActivity.this, res.getMsg().toString(), Toast.LENGTH_LONG).show();
 
                     if (res.getStatus() == 1) {
                         loginModels = res.getLoginModels();
@@ -137,7 +139,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
     public void GetStatus() {
         if (Constants.checkInternet(HomeActivity.this)) {
             Map<String, String> params = new HashMap<String, String>();
@@ -149,6 +150,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void clickListner() {
+        addtask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, AddTaskActivity.class);
+                startActivity(intent);
+            }
+        });
         userlistLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -184,6 +192,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
     }
+
     private void GetDefault() {
         Fragment fragment = null;
         fragment = new HomeFragment();
@@ -192,6 +201,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.replace(R.id.main_framelayout, fragment);
         fragmentTransaction.commit();
     }
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(Intent.ACTION_MAIN);

@@ -5,11 +5,13 @@
       <map>
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/drawable-v24/ic_date.xml" value="0.2" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/drawable/drawer_bg.xml" value="0.24114583333333334" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/drawable/edittext_border.xml" value="0.1425925925925926" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/drawable/ic_phone.xml" value="0.2074074074074074" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/drawable/next_ic.xml" value="0.24114583333333334" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/drawable/pin.xml" value="0.16666666666666666" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/drawable/rect_bg.xml" value="0.2" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/drawable/rect_bg2.xml" value="0.16296296296296298" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_add_task.xml" value="0.17708333333333334" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_all_user_list.xml" value="0.1598731884057971" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_category_list.xml" value="0.16621376811594202" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/activity_edit_profile.xml" value="0.1598731884057971" />
@@ -28,8 +30,10 @@
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/content_drawer.xml" value="0.22083333333333333" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/custom_info_contents.xml" value="0.22083333333333333" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/fragment_home.xml" value="0.22083333333333333" />
-        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/item_category_list.xml" value="0.264" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/item_category_list.xml" value="0.358609794628752" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/item_task_list.xml" value="0.28672985781990523" />
         <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/item_user_list.xml" value="0.22083333333333333" />
+        <entry key="..\:/Divya/Client work/TrackingApp/app/src/main/res/layout/simple_spinner_dropdown_item.xml" value="0.22083333333333333" />
       </map>
     </option>
   </component>

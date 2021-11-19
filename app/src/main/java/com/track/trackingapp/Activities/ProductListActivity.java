@@ -6,7 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -44,8 +48,10 @@ public class ProductListActivity extends AppCompatActivity {
     ArrayList<ProductModel> productModelArrayList = new ArrayList<>();
     ;
     ArrayList<ProductModel> ListModels = new ArrayList<>();
-    ;
+    ArrayList<ProductModel> filteredList = new ArrayList<>();
 
+    @BindView(R.id.inputSearch)
+    EditText inputSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +72,49 @@ public class ProductListActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        inputSearch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence query, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                filteredList.clear();
+
+                query = query.toString().toLowerCase();
+
+
+                for (int i = 0; i < ListModels.size(); i++) {
+
+                    String text = ListModels.get(i).getName();
+                    text = text.toLowerCase();
+                    //Log.e("TAG"+i,text);
+                    if (text.contains(query)) {
+                        Log.e("TAGTEXT" + i, text);
+                        filteredList.add(ListModels.get(i));
+                    }
+                }
+                recyclerProductList.setAdapter(null);
+                recyclerProductList.setLayoutManager(new LinearLayoutManager(ProductListActivity.this.getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+                productListAdapter = new ProductListAdapter(getApplicationContext(), ListModels);
+                recyclerProductList.setAdapter(productListAdapter);
+                productListAdapter.notifyDataSetChanged();
+                // data set changed
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
     }
 
     private void callProductList() {
